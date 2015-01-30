@@ -4,7 +4,9 @@ var gulp    = require('gulp'),
     concat  = require('gulp-concat'),
     mainBowerFiles = require('main-bower-files'),
     browserSync    = require('browser-sync'),
-    bower   = require('gulp-bower');
+    reload      = browserSync.reload,
+    bower   = require('gulp-bower'),
+    watch = require('gulp-watch');
 
 
 var src = './src';
@@ -14,7 +16,8 @@ var config = {
     src: src + '/sass/**/*.{sass,scss}',
     dest: dest + '/static/css',
     options: {
-      outputStyle: 'compressed'
+      outputStyle: 'compressed',
+      errLogToConsole: true
     }
   },
   bower: {
@@ -31,12 +34,30 @@ var config = {
   markup: {
     src: src + '/htdocs/**',
     dest: dest
+  },
+  bsync: {
+    server: dest,
+    watch: dest + '/static/**/**'
   }
 }
 
 
-gulp.task('default', ['vendor', 'sass', 'uglify', 'markup', 'browser-sync']);
 
+/*
+**
+** DEFAULT
+**
+*/
+gulp.task('default', ['sass', 'browser-sync'], function(){
+  gulp.watch(config.sass.src, ['sass']);
+});
+
+
+/*
+**
+** VENODR
+**
+*/
 gulp.task('vendor', ['bower'], function() {
   return gulp.src(mainBowerFiles())
     .pipe(concat('vendor.js'))
@@ -44,34 +65,98 @@ gulp.task('vendor', ['bower'], function() {
     .pipe(gulp.dest(dest + '/static/js'));
 });
 
+
+/*
+**
+** STYLES (watcher & builder)
+**
+*/
+// gulp.task('styles', function () {
+//   return gulp.src(config.sass.src)
+//     .pipe(watch(config.sass.src))
+//     // .pipe(plumber())
+//     .pipe(sass(config.sass.options))
+//     .pipe(gulp.dest(config.sass.dest));
+// });
+
+
+/*
+**
+** SASS (watcher & builder)
+**
+*/
 gulp.task('sass', function () {
-  gulp.src(src)
-    .pipe(sass(config.sass.options))
-    .pipe(gulp.dest(dest));
+    return gulp.src(config.sass.src)
+        .pipe(sass(config.sass.options))
+        .pipe(gulp.dest(config.sass.dest))
+        .pipe(reload({stream:true}));
 });
 
+
+/*
+**
+** SASS
+**
+*/
+// gulp.task('sass', function () {
+//   gulp.src(src)
+//     .pipe(sass(config.sass.options))
+//     .pipe(gulp.dest(dest));
+// });
+
+
+/*
+**
+** UGLIFY
+**
+*/
 gulp.task('uglify', function () {
   gulp.src(config.uglify.src)
     .pipe(uglify())
     .pipe(gulp.dest(config.uglify.dest))
 });
 
+
+/*
+**
+** MARKUP
+**
+*/
 gulp.task('markup', function() {
   return gulp.src(config.markup.src)
     .pipe(gulp.dest(config.markup.dest))
     .pipe(browserSync.reload({stream:true}));
 });
 
+
+/*
+**
+** BROWSER-SYNC
+**
+*/
 gulp.task('browser-sync', function() {
     browserSync({
         server: {
-            baseDir: "./dest"
-        }
+            baseDir: './dest'
+        },
+        files: config.bsync.watch
     });
 });
 
+
+/*
+**
+** BOWER
+**
+*/
 gulp.task('bower', function(cb){
   return bower();
 });
 
+
+/*
+**
+** JS
+**
+*/
 gulp.task('js', ['lint', 'uglify']);
