@@ -1,0 +1,7 @@
+* {
+  @include box-sizing(border-box);
+}
+html, body, ul, ol {
+  margin:0;
+  padding:0;
+}

@@ -1,0 +1,11 @@
+{
+  "project_name": "Cookie Monster",
+  "app_name": "cookie-monster",
+  "description": "Drink milk. Eat cookies.",
+  "name": "Oscar the Grouch",
+  "email": "oscar@the.grouch.com",
+  "homepage": "http://mapsam.com/cookie-monster",
+  "repository": "http://github.com/ogrouch/cookie-monster",
+  "version": "0.1",
+  "license": "MIT"
+}

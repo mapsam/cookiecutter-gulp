@@ -1,6 +1,6 @@
 .DS_Store
-npm-debug.log
-node_modules/
-.sass_cache
-bower_components/
-dest/
+{{cookiecutter.app_name}}/npm-debug.log
+{{cookiecutter.app_name}}/node_modules/
+{{cookiecutter.app_name}}/.sass_cache
+{{cookiecutter.app_name}}/bower_components/
+{{cookiecutter.app_name}}/{{cookiecutter.app_name}}/

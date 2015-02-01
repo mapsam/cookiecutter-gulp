@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{cookiecutter.project_name}}</title>
+    <meta name="description" content="{{cookiecutter.description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/static/js/vendor.js"></script>
+    <script src="/static/js/main.js"></script>
+    <link rel="stylesheet" href="/static/css/site.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>{{cookiecutter.project_name}}</h1>
+  <p style="text-align:center;"><em>{{cookiecutter.description}}</em></p>
+  <p>Hello, <strong>{{cookiecutter.name}}</strong>! Thanks for using the <a href="http://github.com/svmatthews/cookiecutter-gulp">Cookiecutter Gulp</a> project. This is your homepage that you can always find at <span>localhost:3000</span> if you are running the standard <span>gulp</span> command, but you can change that in <span>gulpfile.js</span> if you prefer a different port.</p>
+  <button onclick="Waka.flaka();">Do something!</button>
+  <p>There are a few things going on here that you should be aware of as you begin your new project.</p>
+</div>
+
+<script>
+  window.Waka = window.Waka || {};
+  function init_app() {
+    window.Waka = new WakaController();
+  }
+  window.onload = init_app();
+</script>
+
+</body>
+</html>

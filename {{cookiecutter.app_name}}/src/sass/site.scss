@@ -1,0 +1,15 @@
+/* 
+{{cookiecutter.project_name}}
+{{cookiecutter.description}}
+By {{cookiecutter.name }} | {{cookiecutter.email}}
+Homepage: {{cookiecutter.homepage}}
+*/
+@import "includes/settings";
+@import "includes/mixins";
+
+/* Reset */
+@import "includes/reset";
+
+/* {{cookiecutter.project_name}} styles */
+@import "globals";
+@import "scaffolding";

@@ -1,5 +1,4 @@
 // mixins
-
 @mixin transition($time) {
   -webkit-transition: $time;
      -moz-transition: $time;
@@ -21,3 +20,10 @@
        -o-background-size: $size;
           background-size: $size;
 }
+
+@mixin box-sizing($size) {
+  -webkit-box-sizing: $size;
+     -moz-box-sizing: $size; 
+          box-sizing: $size;
+}
+

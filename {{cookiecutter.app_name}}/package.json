@@ -1,12 +1,12 @@
 {
-  "name": "gulp-quickstart",
-  "version": "0.0.1",
-  "description": "a quickstart for web development using gulp",
-  "homepage": "https://github.com/svmatthews/gulp-quickstart",
-  "bugs": "https://github.com/svmatthews/gulp-quickstart/issues",
+  "name": "{{cookiecutter.app_name}}",
+  "version": "{{cookiecutter.version}}",
+  "description": "{{cookiecutter.description}}",
+  "homepage": "{{cookiecutter.homepage}}",
+  "bugs": "{{cookiecutter.repository}}/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/svmatthews/gulp-quickstart"
+    "url": "{{cookiecutter.repository}}"
   },
   "main": "src/main.js",
   "devDependencies": {

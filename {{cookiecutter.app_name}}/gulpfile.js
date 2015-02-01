@@ -1,16 +1,16 @@
-var gulp    = require('gulp'),
-    uglify  = require('gulp-uglify'),
-    sass    = require('gulp-sass'),
-    concat  = require('gulp-concat'),
-    mainBowerFiles = require('main-bower-files'),
-    browserSync    = require('browser-sync'),
-    reload      = browserSync.reload,
-    bower   = require('gulp-bower'),
-    watch = require('gulp-watch');
+var gulp            = require('gulp'),
+    uglify          = require('gulp-uglify'),
+    sass            = require('gulp-sass'),
+    concat          = require('gulp-concat'),
+    mainBowerFiles  = require('main-bower-files'),
+    browserSync     = require('browser-sync'),
+    reload          = browserSync.reload,
+    bower           = require('gulp-bower'),
+    watch           = require('gulp-watch');
 
 
 var src = './src';
-var dest = './dest';
+var dest = './{{cookiecutter.app_name}}';
 var config = {
   sass: {
     src: src + '/sass/**/*.{sass,scss}',
@@ -29,7 +29,8 @@ var config = {
     options: {}
   },
   vendor: {
-    src: './bower_components/**/'
+    src: './bower_components/**/',
+    dest: dest + '/static/js'
   },
   markup: {
     src: src + '/htdocs/**',
@@ -37,9 +38,9 @@ var config = {
   },
   bsync: {
     server: dest,
-    watch: dest + '/static/**/**'
+    watch: dest + '/static/**/**.*'
   }
-}
+};
 
 
 
@@ -48,8 +49,10 @@ var config = {
 ** DEFAULT
 **
 */
-gulp.task('default', ['sass', 'browser-sync'], function(){
+gulp.task('default', ['markup', 'vendor', 'sass', 'uglify', 'browser-sync'], function(){
   gulp.watch(config.sass.src, ['sass']);
+  gulp.watch(config.uglify.src, ['uglify']);
+  gulp.watch(config.markup.src, ['markup']);
 });
 
 
@@ -62,22 +65,8 @@ gulp.task('vendor', ['bower'], function() {
   return gulp.src(mainBowerFiles())
     .pipe(concat('vendor.js'))
     .pipe(uglify())
-    .pipe(gulp.dest(dest + '/static/js'));
+    .pipe(gulp.dest(config.vendor.dest));
 });
-
-
-/*
-**
-** STYLES (watcher & builder)
-**
-*/
-// gulp.task('styles', function () {
-//   return gulp.src(config.sass.src)
-//     .pipe(watch(config.sass.src))
-//     // .pipe(plumber())
-//     .pipe(sass(config.sass.options))
-//     .pipe(gulp.dest(config.sass.dest));
-// });
 
 
 /*
@@ -91,18 +80,6 @@ gulp.task('sass', function () {
         .pipe(gulp.dest(config.sass.dest))
         .pipe(reload({stream:true}));
 });
-
-
-/*
-**
-** SASS
-**
-*/
-// gulp.task('sass', function () {
-//   gulp.src(src)
-//     .pipe(sass(config.sass.options))
-//     .pipe(gulp.dest(dest));
-// });
 
 
 /*
@@ -137,7 +114,7 @@ gulp.task('markup', function() {
 gulp.task('browser-sync', function() {
     browserSync({
         server: {
-            baseDir: './dest'
+            baseDir: dest
         },
         files: config.bsync.watch
     });
